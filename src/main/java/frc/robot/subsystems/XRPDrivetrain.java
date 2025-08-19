@@ -78,8 +78,16 @@ public class XRPDrivetrain extends SubsystemBase {
     if(DriverStation.isTeleopEnabled()){
       arcadeDrive(-RobotContainer.m_controller.getLeftY(), -RobotContainer.m_controller.getRawAxis(2)); 
       
-      //Keyboard Drive
-      //arcadeDrive(-RobotContainer.m_keyboard.getRawAxis(1), -RobotContainer.m_keyboard.getRawAxis(0));
+      // Keyboard Drive
+      // assume not xbox and keyboard at the same time (no error checking...)
+      if (
+        RobotContainer.m_keyboard.getRawAxis(0) > 0.01  ||
+        RobotContainer.m_keyboard.getRawAxis(0) < -0.01 ||
+        RobotContainer.m_keyboard.getRawAxis(1) > 0.01  ||
+        RobotContainer.m_keyboard.getRawAxis(1) < -0.01
+      ) {
+        arcadeDrive(-RobotContainer.m_keyboard.getRawAxis(1), -RobotContainer.m_keyboard.getRawAxis(0));
+      }
     }
 
     //Network Tables
